@@ -1,5 +1,5 @@
 class Api::FollowersController < ApplicationController
-  before_action: client
+  before_action :client
 
   def index
     followers = @client.followers.take(10).collect do |follower|
@@ -13,12 +13,13 @@ class Api::FollowersController < ApplicationController
     render json: followers
   end
 
-private
-  def client
-    @client = Twitter::Rest::Client.new do |c| 
-      c.consumer_key = ENV['CONSUMER_KEY']
-      c.consumer_key = ENV['CONSUMER_SECRET']
-      c.consumer_key = ENV['ACCESS_TOKEN']
-      c.consumer_key = ENV['ACCESS_TOKEN_SECRET']
-  end
+  private
+    def client
+      @client = Twitter::REST::Client.new do |c| 
+        c.consumer_key = ENV['CONSUMER_KEY']
+        c.consumer_key = ENV['CONSUMER_SECRET']
+        c.consumer_key = ENV['ACCESS_TOKEN']
+        c.consumer_key = ENV['ACCESS_TOKEN_SECRET']
+      end
+    end
 end
